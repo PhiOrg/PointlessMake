@@ -89,3 +89,11 @@ void StaticLibrary::RemovePointlessSpaces(string& str)
         }
 }
 
+void StaticLibrary::Create()
+{
+    string command = "ar rcs " + nume ' ';
+    for (unsigned int i = 0; i < objectFiles.size(); i++)
+        command += objectFiles[i];
+    system(command.c_str());
+}
+

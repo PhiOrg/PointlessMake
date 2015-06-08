@@ -14,6 +14,7 @@ class StaticLibrary
         void SetCflags(std::string&);
         void SetFiles(std::string&);
         void CompileFiles();
+        void Create();
     private:
         void RemovePointlessSpaces(std::string&);
         unsigned long long int GetLastModification(std::string&);
