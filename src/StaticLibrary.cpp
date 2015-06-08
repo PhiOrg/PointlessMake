@@ -33,7 +33,7 @@ void StaticLibrary::SetCflags(string& cflags)
 void StaticLibrary::SetFiles(string& files)
 {
     RemovePointlessSpaces(files);
-    this->files = ParseCommand(files);
+    this->files = SplitString(files);
 }
 
 void StaticLibrary::CompileFiles()
