@@ -1,7 +1,7 @@
 #ifndef _POINTLESSMAKE_H__
 #define _POINTLESSMAKE_H__
 
-#define PointlessMakeFile "pointlessmake.pm"
+#define PointlessMakeFile "pointlessmake.pam"
 
 #include <string>
 #include <vector>
