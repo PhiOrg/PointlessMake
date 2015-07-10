@@ -16,15 +16,18 @@ class PointlessMake
     public:
         PointlessMake();
         virtual~ PointlessMake();
-        void Execute();
+        void CreateOutput();
         bool CheckIfFileIsCorrect();
+        bool GetError();
     private:
-        void GetSubdirectories(std::string);
+        unsigned long long int GetLastModification(std::string&) const;
+        void SetCurrentTimeInConfigFile() const;
         void ProcessingKeyword(std::vector<std::string>&);
         void RemoveTabs(std::string&);
         void RemovePointlessSpaces(std::string&);
-        bool CheckIfFileExists(std::string&);
+        bool CheckIfFileExists(std::string&) const;
         bool CheckIfKeywordExists(std::string&);
+        bool CheckNumberOfKeywords(std::vector<std::string>&);
         short int CheckIfDirExists(std::string);
 
         std::vector<SharedObject*> sharedObjects;
@@ -32,8 +35,8 @@ class PointlessMake
         std::vector<Executable*> executables;
         std::vector<std::string> subdirectories;
         OutputType* object;
-        bool ret = true;
-        short int existsBin, existsSrc;
+        bool error = false, compiler = true;
+        short int existsBin, existsSrc, type;
         unsigned long long int seconds = 0, lines = 0;
 };
 

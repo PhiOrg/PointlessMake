@@ -8,10 +8,9 @@
 class StaticLibrary : public OutputType
 {
     public:
-        StaticLibrary(unsigned long long int);
+        StaticLibrary(unsigned long long int, unsigned long long int);
         virtual~ StaticLibrary();
         void Create();
-        void SetLdflags(std::string&);
 };
 
 #endif

@@ -8,10 +8,9 @@
 class SharedObject : public OutputType
 {
     public:
-        SharedObject(unsigned long long int);
+        SharedObject(unsigned long long int, unsigned long long int);
         virtual~ SharedObject();
         void Create();
-        void SetLdflags(std::string&);
 };
 
 #endif

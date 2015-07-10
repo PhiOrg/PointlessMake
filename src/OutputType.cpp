@@ -2,12 +2,13 @@
 #include "parser.h"
 #include <cstdlib>
 #include <sys/stat.h>
+#include <iostream>
 
 using namespace std;
 
 void OutputType::SetName(string& name)
 {
-    this->name = name;
+    this->name = "bin/" + name;
 }
 
 void OutputType::SetCompiler(string& compiler)
@@ -15,41 +16,47 @@ void OutputType::SetCompiler(string& compiler)
     this->compiler = compiler;
 }
 
-void OutputType::SetCflags(string& cflags)
+void OutputType::AddCflags(string& cflags)
 {
-    this->cflags = cflags;
+    this->cflags += cflags + ' ';
 }
 
-void OutputType::SetFiles(string& files)
+void OutputType::AddFiles(string& file)
 {
-    RemovePointlessSpaces(files);
-    this->files = SplitString(files);
+    files.push_back(File(file));
 }
 
-void OutputType::CompileFiles()
+void OutputType::AddLdflags(string& ldflags)
 {
+    this->ldflags += ldflags + ' ';
+}
+
+bool OutputType::CompileFiles()
+{
+    bool result = true;
     for (unsigned int i = 0; i < files.size(); i++)
     {
-        if (GetLastModification(files[i]) < lastCompilation)
-            continue;
-        string objectFile = files[i];
-        objectFile[0] = 'b';
-        objectFile[1] = 'i';
-        objectFile[2] = 'n';
-        int j = objectFile.size() - 1;
-        while (objectFile[j] != '.')
+        if (!files[i].FileIsOk())
         {
-            objectFile.erase(j);
-            j--;
+            result = false;
+            cout << "pointlessmake.pm: " << line << ": error: ";
+            cout << files[i].GetError() << "\n";
+            continue;
         }
-        objectFile.push_back('o');
-        objectFiles.push_back(objectFile);
 
-        string command = compiler + ' ' + cflags + " -c " + files[i] + " -o ";
-        command += objectFile;
+        if (files[i].CheckIfObjectFileExists())
+        {
+            string file = files[i].GetFile();
+            if (GetLastModification(file) < lastCompilation)
+                continue;
+        }
+
+        string command = compiler + ' ' + cflags + " -c " + files[i].GetFile();
+        command += " -o " + files[i].GetObjectFile();
         system(command.c_str());
     }
 
+    return result;
 }
 
 unsigned long long int OutputType::GetLastModification(std::string& file)
@@ -65,17 +72,5 @@ unsigned long long int OutputType::GetLastModification(std::string& file)
     }
 
     return 0;
-}
-
-void OutputType::RemovePointlessSpaces(string& str)
-{
-    while (str[0] == ' ')
-        str.erase(0);
-    for (int i = 0; i < str.size() - 1; i++)
-        if (str[i] == ' ' && str[i + 1] == ' ')
-        {
-            str.erase(i);
-            i--;
-        }
 }
 

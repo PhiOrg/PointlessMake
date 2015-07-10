@@ -6,12 +6,9 @@
 class Executable : public OutputType
 {
     public:
-        Executable(unsigned long long int);
+        Executable(unsigned long long int, unsigned long long int);
         virtual~ Executable();
         void Create();
-        void SetLdflags(std::string&);
-    private:
-        std::string ldflags;
 };
 
 #endif

@@ -1,11 +1,15 @@
 #include "PointlessMake.h"
 
-using namespace std;
-
 int main()
 {
     PointlessMake pm;
-    pm.CheckIfFileIsCorrect();
+    if (!pm.GetError())
+    {
+        if (pm.CheckIfFileIsCorrect())
+        {
+            pm.CreateOutput();
+        }
+    }
 
     return 0;
 }

@@ -3,23 +3,23 @@
 
 #include <string>
 #include <vector>
+#include "File.h"
 
 class OutputType
 {
     public:
         void SetName(std::string&);
         void SetCompiler(std::string&);
-        void SetCflags(std::string&);
-        void SetFiles(std::string&);
-        void CompileFiles();
+        void AddCflags(std::string&);
+        void AddFiles(std::string&);
+        void AddLdflags(std::string&);
+        bool CompileFiles();
         virtual void Create() = 0;
-        virtual void SetLdflags(std::string&) = 0;
     protected:
-        void RemovePointlessSpaces(std::string&);
         unsigned long long int GetLastModification(std::string&);
-        unsigned long long int lastCompilation;
-        std::string name, compiler, cflags;
-        std::vector<std::string> files, objectFiles;
+        unsigned long long int lastCompilation, line;
+        std::string name, compiler, cflags, ldflags;
+        std::vector<File> files;
 };
 
 #endif

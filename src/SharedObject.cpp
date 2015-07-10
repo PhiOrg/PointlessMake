@@ -5,10 +5,11 @@
 
 using namespace std;
 
-SharedObject::SharedObject(unsigned long long int lastCompilation)
+SharedObject::SharedObject(unsigned long long int lastCompilation,
+                           unsigned long long int line)
 {
+    this->line = line;
     this->lastCompilation = lastCompilation;
-    this->cflags = "-fPIC";
 }
 
 SharedObject::~SharedObject()
@@ -16,16 +17,13 @@ SharedObject::~SharedObject()
 
 }
 
-void SharedObject::SetLdflags(std::string& unused)
-{
-
-}
-
 void SharedObject::Create()
 {
     string command = compiler + " -shared -o " + name + ' ';
-    for (unsigned int i = 0; i < objectFiles.size(); i++)
-        command += objectFiles[i];
+    for (unsigned int i = 0; i < files.size(); i++)
+        command += files[i].GetObjectFile() + ' ';
+    command += ldflags;
+
     system(command.c_str());
 }
 
