@@ -1,8 +1,11 @@
-#include "OutputType.h"
-#include "parser.h"
 #include <cstdlib>
 #include <sys/stat.h>
 #include <iostream>
+#include <fstream>
+#include <unistd.h>
+
+#include "OutputType.h"
+#include "parser.h"
 
 using namespace std;
 
@@ -53,13 +56,68 @@ bool OutputType::CompileFiles()
 
         string command = compiler + ' ' + cflags + " -c " + files[i].GetFile();
         command += " -o " + files[i].GetObjectFile();
+
+        SetColor(FG_blue);
+        cout << command << "\n";
+        SetColor(FG_white);
+
+        command += " 2>&1 | tee -a .compilationFile";
         system(command.c_str());
+
+        if (GetFileSize(".compilationFile") == 0)
+        {
+            SetColor(FG_green);
+            cout << "succesfully compilation\n\n";
+            SetColor(FG_white);
+        }
+        else
+        {
+            if (CheckIfExistsErrors(".compilationFile"))
+            {
+                files[i].SetCompilationErrors();
+                SetColor(FG_red);
+                cout << "failed compilation\n\n";
+                SetColor(FG_white);
+            }
+            else
+            {
+                SetColor(FG_red);
+                cout << "the warnings should be fixed\n\n";
+                SetColor(FG_white);
+            }
+        }
+
+        system("rm .compilationFile");
     }
 
     return result;
 }
 
-unsigned long long int OutputType::GetLastModification(std::string& file)
+unsigned long long int OutputType::GetFileSize(string file) const
+{
+    struct stat filestatus;
+    stat(file.c_str(), &filestatus);
+
+    return filestatus.st_size;
+}
+
+bool OutputType::CheckIfExistsErrors(string file) const
+{
+    ifstream f(file.c_str());
+    string line;
+
+    int errors = 0;
+    while (getline(f, line))
+    {
+        size_t found = line.find("error");
+        if (found != string::npos)
+            errors++;
+    }
+
+    return errors != 0;
+}
+
+unsigned long long int OutputType::GetLastModification(std::string& file) const
 {
     struct stat st;
     if (stat(file.c_str(), &st))
@@ -72,5 +130,10 @@ unsigned long long int OutputType::GetLastModification(std::string& file)
     }
 
     return 0;
+}
+
+void OutputType::SetColor(int code) const
+{
+    cout << "\033[" << code << "m";
 }
 

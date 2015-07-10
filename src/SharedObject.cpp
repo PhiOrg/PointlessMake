@@ -1,7 +1,5 @@
 #include "SharedObject.h"
-#include "parser.h"
-#include <cstdlib>
-#include <sys/stat.h>
+#include <iostream>
 
 using namespace std;
 
@@ -19,11 +17,29 @@ SharedObject::~SharedObject()
 
 void SharedObject::Create()
 {
+    bool correct = true;
     string command = compiler + " -shared -o " + name + ' ';
+
     for (unsigned int i = 0; i < files.size(); i++)
+    {
         command += files[i].GetObjectFile() + ' ';
+        if (files[i].FileIsOk() == false)
+            correct = false;
+    }
     command += ldflags;
 
-    system(command.c_str());
+    if (correct)
+    {
+        system(command.c_str());
+        SetColor(FG_green);
+        cout << command << "\n";
+        SetColor(FG_white);
+    }
+    else
+    {
+        SetColor(FG_red);
+        cout << command << "\n";
+        SetColor(FG_white);
+    }
 }
 

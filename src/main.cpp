@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#define VERSION "1.0";
+#define VERSION "1.0"
 
 void help()
 {
@@ -13,7 +13,7 @@ void help()
     cout << "   clean   - delete the bin directory\n";
     cout << "   all     - delete the bin directory and compiles all files\n";
     cout << "   version - print the version\n";
-    cout << "   about   - Print some informations about this project\n";
+    cout << "   about   - print some informations about this project\n";
 }
 
 void version()

@@ -13,6 +13,7 @@ class File
         bool CheckIfFileExists() const;
         bool CheckIfObjectFileExists() const;
         bool FileIsOk() const;
+        void SetCompilationErrors();
     private:
         void CreateDirectoryForObjectFile() const;
 
@@ -24,6 +25,7 @@ class File
          * 2 - the file doesn't exists              *
          * 3 - file permission denied               *
          * 4 - object file permission denied        *
+         * 5 - compilation errors                   *
          * ******************************************/
 };
 

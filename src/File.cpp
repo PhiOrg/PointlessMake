@@ -84,6 +84,12 @@ string File::GetError() const
     return "";
 }
 
+void File::SetCompilationErrors()
+{
+    if (error == 0)
+        error = 5;
+}
+
 bool File::FileIsOk() const
 {
     return error == 0;
