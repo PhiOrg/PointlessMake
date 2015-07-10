@@ -1,0 +1,3 @@
+StaticLibrary libprim.la
+compiler g++
+files src/prime.cpp
