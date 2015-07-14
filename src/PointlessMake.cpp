@@ -209,7 +209,15 @@ void PointlessMake::ProcessingKeyword(vector<string>& words)
                 cout << "pointlessmake.pm: " << lines << ": error: too many arguments\n";
         }
         else
+        {
             object->SetName(words[1]);
+            string _file = "bin/" + words[1];
+            if (CheckIfFileExists(_file))
+            {
+                string _command = "rm " + _file;
+                system(_command.c_str());
+            }
+        }
         return;
     }
 
@@ -228,7 +236,15 @@ void PointlessMake::ProcessingKeyword(vector<string>& words)
                 cout << "pointlessmake.pm: " << lines << ": error: too many arguments\n";
         }
         else
+        {
             object->SetName(words[1]);
+            string _file = "bin/" + words[1];
+            if (CheckIfFileExists(_file))
+            {
+                string _command = "rm " + _file;
+                system(_command.c_str());
+            }
+        }
         return;
     }
 
@@ -247,7 +263,15 @@ void PointlessMake::ProcessingKeyword(vector<string>& words)
                 cout << "pointlessmake.pm: " << lines << ": error: too many arguments\n";
         }
         else
+        {
             object->SetName(words[1]);
+            string _file = "bin/" + words[1];
+            if (CheckIfFileExists(_file))
+            {
+                string _command = "rm " + _file;
+                system(_command.c_str());
+            }
+        }
         return;
     }
 

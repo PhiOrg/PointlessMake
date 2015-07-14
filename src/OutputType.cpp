@@ -41,6 +41,12 @@ bool OutputType::CompileFiles()
     {
         if (!files[i].FileIsOk())
         {
+            if (files[i].CheckIfObjectFileExists())
+            {
+                string _command = "rm " + files[i].GetObjectFile();
+                system(_command.c_str());
+            }
+
             result = false;
             cout << "pointlessmake.pm: " << line << ": error: ";
             cout << files[i].GetError() << "\n";
@@ -52,14 +58,20 @@ bool OutputType::CompileFiles()
             string file = files[i].GetFile();
             if (GetLastModification(file) < lastCompilation)
                 continue;
+            else
+            {
+                string _command = "rm " + files[i].GetObjectFile();
+                system(_command.c_str());
+            }
         }
 
         string command = compiler + ' ' + cflags + " -c " + files[i].GetFile();
         command += " -o " + files[i].GetObjectFile();
 
         SetColor(FG_blue);
-        cout << command << "\n";
+        cout << command;
         SetColor(FG_white);
+        cout << "\n";
 
         command += " 2>&1 | tee -a .compilationFile";
         system(command.c_str());
