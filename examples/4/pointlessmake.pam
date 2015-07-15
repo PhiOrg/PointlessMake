@@ -1,0 +1,12 @@
+StaticLibrary libprime.la
+compiler g++
+files src/prime/prime.cpp
+
+SharedObject libnumber.so
+compiler g++
+files src/number/number.cpp
+
+Executable test
+compiler g++
+ldflags bin/libprime.la bin/libnumber.so
+files src/main.cpp
