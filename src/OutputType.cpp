@@ -79,8 +79,9 @@ bool OutputType::CompileFiles()
         if (GetFileSize(".compilationFile") == 0)
         {
             SetColor(FG_green);
-            cout << "succesfully compilation\n\n";
+            cout << "succesfully compilation";
             SetColor(FG_white);
+            cout << "\n\n";
         }
         else
         {
@@ -88,14 +89,16 @@ bool OutputType::CompileFiles()
             {
                 files[i].SetCompilationErrors();
                 SetColor(FG_red);
-                cout << "failed compilation\n\n";
+                cout << "failed compilation";
                 SetColor(FG_white);
+                cout << "\n\n";
             }
             else
             {
                 SetColor(FG_red);
-                cout << "the warnings should be fixed\n\n";
+                cout << "the warnings should be fixed";
                 SetColor(FG_white);
+                cout << "\n\n";
             }
         }
 

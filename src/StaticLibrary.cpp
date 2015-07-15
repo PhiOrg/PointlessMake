@@ -35,14 +35,16 @@ void StaticLibrary::Create()
     {
         system(command.c_str());
         SetColor(FG_green);
-        cout << command << "\n";
+        cout << command;
         SetColor(FG_white);
+        cout << "\n";
     }
     else
     {
         SetColor(FG_red);
-        cout << command << "\n";
+        cout << command;
         SetColor(FG_white);
+        cout << "\n";
     }
 }
 
