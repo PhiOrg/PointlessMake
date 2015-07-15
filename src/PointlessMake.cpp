@@ -116,6 +116,8 @@ void PointlessMake::RemovePointlessSpaces(string& str)
         else
             break;
 
+    if (str.size() == 0)
+        return;
     for (unsigned int i = 0; i < str.size() - 1; i++)
         if (str[i] == ' ' && str[i + 1] == ' ')
         {
