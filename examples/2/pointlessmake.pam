@@ -1,0 +1,3 @@
+SharedObject libprim.so
+compiler g++
+files src/prime.cpp
